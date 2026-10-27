@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOBODY CHOSE THIS — a slop audit of 253,673 words an AI already wrote</title>
+<meta name="description" content="Slop isn't bad writing. Slop is a decision nobody made. We counted the decisions in everything one AI agent wrote — and where we couldn't find one, we say so.">
+<meta property="og:title" content="NOBODY CHOSE THIS">
+<meta property="og:description" content="A slop audit of 253,673 words an AI already wrote. Built with Hermes Agent + Reducto + Pangram.">
+<style>
+:root{
+  --navy:#001240; --navy-2:#001a52; --line:rgba(0,212,255,.16); --line-2:rgba(0,212,255,.34);
+  --cyan:#00d4ff; --ink:#e9f2fb; --dim:#7f9cbb; --dim-2:#5d7794;
+  --frame:#ff7a45; --template:#ff5c39; --thin:#ffc247; --vapour:#b98cff;
+  --passable:#6fd0ea; --survivor:#25e6a8;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,Helvetica,Arial,sans-serif;
+  --w:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--navy);color:var(--ink);font-family:var(--sans);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+/* the pixel grid — D0xed blueprint canon: navy ground, faint cyan lattice */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(0,212,255,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,212,255,.05) 1px,transparent 1px);
+  background-size:26px 26px;
+  mask-image:radial-gradient(120% 80% at 50% 0%,#000 20%,transparent 78%);
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(90% 55% at 78% -8%,rgba(0,212,255,.13),transparent 62%),
+             radial-gradient(70% 45% at 8% 105%,rgba(37,230,168,.07),transparent 60%);
+}
+.wrap{position:relative;z-index:1;max-width:var(--w);margin:0 auto;padding:0 26px}
+a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,212,255,.35)}
+a:hover{border-bottom-color:var(--cyan)}
+h1,h2,h3{line-height:1.05;margin:0;letter-spacing:-.02em}
+.mono{font-family:var(--mono)}
+.kick{
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cyan);display:flex;align-items:center;gap:9px;margin:0 0 18px
+}
+.sq{width:9px;height:9px;background:var(--cyan);display:inline-block;flex:none}
+.sq.f{background:var(--frame)} .sq.s{background:var(--survivor)} .sq.t{background:var(--template)}
+section{padding:96px 0;border-top:1px solid var(--line);position:relative}
+section.tight{padding:64px 0}
+h2{font-size:clamp(28px,4.2vw,50px);font-weight:800;margin-bottom:14px}
+h3{font-size:20px;font-weight:700;margin-bottom:8px}
+.lede{font-size:clamp(17px,1.55vw,21px);color:#cfe0f0;max-width:74ch}
+.small{font-size:14px;color:var(--dim);max-width:76ch}
+.tiny{font-family:var(--mono);font-size:11.5px;color:var(--dim-2);letter-spacing:.04em}
+.grid{display:grid;gap:26px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(0,212,255,.035),transparent);padding:20px}
+.card.n{border-left:2px solid var(--line-2)}
+
+/* ---------- hero ---------- */
+header{padding:118px 0 78px;border:0}
+.hero-title{
+  font-size:clamp(46px,10.4vw,138px);font-weight:800;letter-spacing:-.045em;line-height:.92;
+  margin:0 0 8px;color:#fff
+}
+.hero-title .nb{color:var(--frame)}
+.hero-sub{font-size:clamp(18px,2.15vw,27px);line-height:1.42;color:#cfe0f0;max-width:24ch;margin:26px 0 0;font-weight:600}
+.hero-sub .f{color:var(--frame)}
+.thesis{
+  margin:34px 0 0;padding:20px 0 20px 22px;border-left:2px solid var(--cyan);
+  font-size:clamp(17px,1.7vw,22px);color:#dbeaf7;max-width:64ch
+}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;margin-top:44px;border-top:1px solid var(--line)}
+.stat{padding:18px 14px 14px;border-bottom:1px solid var(--line)}
+.stat b{display:block;font-size:clamp(26px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.stat span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+.stat.hot b{color:var(--frame)}
+
+/* ---------- repeated sentence ---------- */
+.bigline{
+  font-size:clamp(22px,3.5vw,44px);font-weight:700;line-height:1.2;letter-spacing:-.025em;color:#fff;
+  max-width:22ch;margin:0 0 6px
+}
+.bigline .m{color:var(--frame)}
+.ticks{display:flex;flex-wrap:wrap;gap:3px;margin:20px 0 8px;max-width:640px}
+.tick{width:7px;height:26px;background:var(--frame);opacity:.82}
+.tick.p{background:var(--acyan,var(--cyan))}
+.rline{border-top:1px solid var(--line);padding:20px 0;display:grid;grid-template-columns:78px 1fr;gap:20px;align-items:start}
+.rline .cnt{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--frame);letter-spacing:-.03em}
+.rline .tx{font-size:clamp(16px,1.55vw,19px);color:#dbeaf7}
+
+/* ---------- map ---------- */
+.mapbar{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 8px}
+.tab{
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:8px 12px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--dim);transition:.15s
+}
+.tab:hover{color:var(--ink);border-color:var(--line-2)}
+.tab.on{background:var(--cyan);color:var(--navy);border-color:var(--cyan);font-weight:700}
+.docmeta{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin:14px 0 18px;display:flex;flex-wrap:wrap;gap:18px}
+.docmeta b{color:var(--ink);font-weight:600}
+.map{border:1px solid var(--line);padding:26px 28px;background:rgba(0,6,26,.44);max-height:520px;overflow:auto}
+.map p{margin:0 0 13px;font-size:15.5px;line-height:1.66}
+.map p.content{color:#e6f2fd;border-left:2px solid var(--survivor);padding-left:11px;margin-left:-13px}
+.map p.frame{color:#c9a08c;border-left:2px solid var(--frame);padding-left:11px;margin-left:-13px;background:rgba(255,122,69,.055)}
+.sh{
+  display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;
+  color:var(--frame);border:1px solid rgba(255,122,69,.4);padding:0 4px;margin-left:7px;
+  vertical-align:middle;white-space:nowrap
+}
+.map p.content .sh{color:var(--survivor);border-color:rgba(37,230,168,.35)}
+.legend{display:flex;flex-wrap:wrap;gap:22px;margin:18px 0 4px;font-size:13px;color:var(--dim)}
+.legend i{width:11px;height:11px;display:inline-block;margin-right:7px;vertical-align:-1px}
+.callout{
+  border:1px solid rgba(255,92,57,.42);background:rgba(255,92,57,.07);padding:18px 20px;margin:26px 0 0;max-width:82ch
+}
+.callout .kick{color:var(--template);margin-bottom:10px}
+.callout code{font-family:var(--mono);font-size:13.5px;color:#ffd9cb;background:rgba(255,92,57,.12);padding:1px 5px}
+
+/* ---------- chart ---------- */
+.chartbox{border:1px solid var(--line);background:rgba(0,6,26,.4);padding:16px 10px 6px;overflow:hidden}
+svg.scatter{width:100%;height:auto;display:block}
+.dot{cursor:pointer}
+.dot:hover{stroke:#fff;stroke-width:1.4}
+
+/* ---------- table ---------- */
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 12px;align-items:center}
+.controls input{
+  font-family:var(--mono);font-size:12px;background:rgba(0,8,32,.6);border:1px solid var(--line);
+  color:var(--ink);padding:9px 12px;min-width:230px;outline:none
+}
+.controls input:focus{border-color:var(--cyan)}
+.ledger{width:100%;border-collapse:collapse;font-size:13.5px}
+.ledger th{
+  text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);padding:10px 10px;border-bottom:1px solid var(--line-2);position:sticky;top:0;background:var(--navy);cursor:pointer
+}
+.ledger td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.ledger tr:hover td{background:rgba(0,212,255,.045)}
+.ledger .num{font-family:var(--mono);text-align:right;white-space:nowrap}
+.ledger .fn{font-family:var(--mono);font-size:12px;color:#cfe0f0;word-break:break-all}
+.scroll{max-height:560px;overflow:auto;border:1px solid var(--line)}
+.v{font-family:var(--mono);font-size:10px;letter-spacing:.08em;padding:2px 6px;white-space:nowrap}
+.v.TEMPLATE{color:var(--template);border:1px solid rgba(255,92,57,.45)}
+.v.THIN{color:var(--thin);border:1px solid rgba(255,194,71,.4)}
+.v.VAPOUR{color:var(--vapour);border:1px solid rgba(185,140,255,.4)}
+.v.PASSABLE{color:var(--passable);border:1px solid rgba(111,208,234,.4)}
+.v.SURVIVOR{color:var(--survivor);border:1px solid rgba(37,230,168,.4)}
+.bar{height:5px;background:rgba(255,255,255,.07);position:relative;min-width:54px}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--frame)}
+
+/* ---------- rebuild ---------- */
+.ba{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0;border:1px solid var(--line)}
+.ba>div{padding:22px}
+.ba>div+div{border-left:1px solid var(--line)}
+.ba .h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.ba .before .h{color:var(--frame)} .ba .after .h{color:var(--survivor)}
+.ba .q{font-size:17px;line-height:1.6;color:#dbeaf7}
+.ba .after .q{color:#fff}
+.chain{counter-reset:s;margin:22px 0 0;padding:0;list-style:none;max-width:88ch}
+.chain li{counter-increment:s;position:relative;padding:0 0 16px 40px;border-left:1px solid var(--line);margin-left:9px}
+.chain li:last-child{border-left-color:transparent}
+.chain li::before{
+  content:counter(s);position:absolute;left:-10px;top:0;width:20px;height:20px;background:var(--navy);
+  border:1px solid var(--line-2);color:var(--cyan);font-family:var(--mono);font-size:10.5px;
+  display:flex;align-items:center;justify-content:center
+}
+.chain b{display:block;font-size:15px;color:#fff;margin-bottom:2px}
+.chain span{font-size:14.5px;color:#bdd3e6}
+
+/* ---------- sponsors / method ---------- */
+.sp{border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;gap:10px}
+.sp .nm{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.sp .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan)}
+.sp .st{margin-top:auto;font-family:var(--mono);font-size:11px;padding-top:12px;border-top:1px solid var(--line)}
+.st.live{color:var(--survivor)} .st.todo{color:var(--thin)}
+pre{
+  font-family:var(--mono);font-size:12px;line-height:1.6;background:rgba(0,6,26,.6);border:1px solid var(--line);
+  padding:14px 16px;overflow:auto;color:#cfe0f0;margin:10px 0 0
+}
+pre .c{color:var(--dim-2)} pre .k{color:var(--cyan)}
+.runner{border:1px solid var(--line);padding:20px;background:rgba(0,6,26,.4)}
+.runner textarea{
+  width:100%;min-height:120px;font-family:var(--mono);font-size:12.5px;background:rgba(0,8,32,.7);
+  border:1px solid var(--line);color:var(--ink);padding:12px;outline:none;resize:vertical
+}
+.runner textarea:focus{border-color:var(--cyan)}
+.btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:11px 18px;
+  background:var(--cyan);color:var(--navy);border:0;cursor:pointer;font-weight:700
+}
+.btn.gh{background:transparent;color:var(--cyan);border:1px solid var(--line-2)}
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:2px;margin-top:18px}
+.score .s{padding:12px;border:1px solid var(--line)}
+.score .s b{display:block;font-size:24px;font-weight:800;font-family:var(--mono)}
+.score .s span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* ---------- WHY mode ---------- */
+#whybtn{
+  position:fixed;right:18px;bottom:18px;z-index:60;font-family:var(--mono);font-size:11px;
+  letter-spacing:.12em;padding:12px 16px;background:var(--cyan);color:var(--navy);border:0;cursor:pointer;font-weight:700;
+  box-shadow:0 8px 30px rgba(0,0,0,.5)
+}
+#whybtn.on{background:var(--frame);color:#170600}
+[data-w]{position:relative}
+body.why [data-w]::after{
+  content:"?";position:absolute;top:-9px;right:-9px;width:19px;height:19px;background:var(--frame);color:#170600;
+  font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:20;box-shadow:0 0 0 2px rgba(0,6,26,.85)
+}
+body.why [data-w]{cursor:help}
+#panel{
+  position:fixed;top:0;right:0;height:100%;width:min(430px,92vw);background:#000b26;border-left:1px solid var(--line-2);
+  z-index:70;transform:translateX(102%);transition:transform .26s cubic-bezier(.2,.8,.2,1);padding:26px;overflow-y:auto;
+  box-shadow:-20px 0 60px rgba(0,0,0,.55)
+}
+#panel.on{transform:none}
+#panel .pc{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--frame)}
+#panel h4{margin:10px 0 16px;font-size:19px;color:#fff;line-height:1.28}
+#panel dl{margin:0;font-size:14.5px}
+#panel dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-top:16px}
+#panel dd{margin:5px 0 0;color:#d5e6f5;line-height:1.55}
+#panel .x{position:absolute;top:18px;right:20px;background:none;border:0;color:var(--dim);font-size:22px;cursor:pointer;font-family:var(--mono)}
+footer{border-top:1px solid var(--line);padding:56px 0 90px;color:var(--dim);font-size:14px}
+@media(max-width:640px){
+  section{padding:64px 0}
+  .rline{grid-template-columns:58px 1fr;gap:12px}
+  .ba>div+div{border-left:0;border-top:1px solid var(--line)}
+}
+</style>
+</head>
+<body>
+
+<button id="whybtn" title="Show the reasoning behind every choice on this page">WHY ▸ press W</button>
+<aside id="panel"><button class="x" onclick="closeWhy()">✕</button><div id="pbody"></div></aside>
+
+<div class="wrap">
+
+<!-- ======================= HERO ======================= -->
+<header>
+  <p class="kick" data-w="kick"><span class="sq"></span>Non-Slop Hackathon entry · Pangram × Nous Research × Reducto · 2026-11-22 · Brooklyn</p>
+  <h1 class="hero-title" data-w="title">NOBODY<br><span class="nb">CHOSE</span> THIS</h1>
+  <p class="hero-sub" data-w="herosub">An audit of everything one AI agent wrote — <span class="f">and a map of where the choices actually were.</span></p>
+
+  <p class="thesis" data-w="thesis">Generation is cheap now. The scarce thing is the act of choosing, and a choice leaves a trace you can count. So instead of generating more, we went back through <b>253,673 words an agent had already published</b> and asked, sentence by sentence: <i>did anyone choose this, or did it arrive by itself?</i></p>
+
+  <div class="statrow">
+    <div class="stat" data-w="s1"><b id="k-art">—</b><span>artifacts audited</span></div>
+    <div class="stat" data-w="s2"><b id="k-words">—</b><span>words read</span></div>
+    <div class="stat hot" data-w="s3"><b id="k-frame">—</b><span>inherited words</span></div>
+    <div class="stat hot" data-w="s4"><b id="k-rep">—</b><span>copies of one sentence</span></div>
+  </div>
+  <p class="tiny" style="margin-top:16px">Every number on this page is produced by <span class="mono">engine.py</span>, which you can re-run. <a href="#method">Method ↓</a> · <a href="#ledger">Full ledger ↓</a></p>
+</header>
+
+<!-- ======================= THE BRIEF ======================= -->
+<section id="brief">
+  <p class="kick" data-w="briefk"><span class="sq"></span>The brief</p>
+  <h2 data-w="briefh">“What matters when you can generate anything? Can you explain your choices?”</h2>
+  <div class="grid g2" style="margin-top:30px">
+    <div>
+      <p class="lede" data-w="briefa">The brief asks for taste, which is usually unmeasurable — so it usually gets answered with adjectives. We tried to answer it with a number instead.</p>
+      <p class="lede" style="margin-top:18px">Our claim: <b>slop is not bad writing. Slop is a decision nobody made.</b> A decision leaves evidence. It names a specific thing, a number, a link, a constraint. Inherited text leaves the opposite evidence: its wording already existed somewhere else.</p>
+      <p class="lede" style="margin-top:18px">Both are countable. That is the whole idea.</p>
+    </div>
+    <div class="card n" data-w="briefbox">
+      <h3>The two measurements</h3>
+      <p class="small" style="color:#cfe0f0"><b style="color:var(--frame)">1 · THE FRAME.</b> Mask out every number, ticker, handle, date, version and CVE id — so <span class="mono">“price rose 4%”</span> and <span class="mono">“price fell 9%”</span> become the <i>same</i> sentence. A sentence whose remaining 5-word sequences already appear in 3+ other documents was not written for this document. It was inherited.</p>
+      <p class="small" style="color:#cfe0f0;margin-top:14px"><b style="color:var(--survivor)">2 · THE CONTENT.</b> Verifiable anchors — urls, handles, tickers, CVE ids, issue numbers, versions, quantities with units, currency, addresses, paths, code. Anchor density per 1,000 words, measured over the <i>non-inherited</i> sentences only, so a document made entirely of recycled text scores zero by construction.</p>
+      <p class="tiny" style="margin-top:16px">A document that is mostly frame, wrapping little that is checkable, contains almost no decisions. That is the definition this audit uses — stated up front, and re-runnable by anyone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ONE SENTENCE ======================= -->
+<section id="one">
+  <p class="kick" data-w="onek"><span class="sq f"></span>The finding · one sentence</p>
+  <h2 data-w="oneh">Wording is not supposed to be reusable. This was.</h2>
+  <p class="lede" style="margin-bottom:44px">This sentence is the agent's editorial voice — the line that tells a reader what to do with an item. It appears, character for character, in <b style="color:var(--frame)">74 separate published documents</b>.</p>
+
+  <p class="bigline" data-w="bigline">“we weigh this against how agents <span class="m">actually fail in prod</span>.”</p>
+  <div class="ticks" id="ticks" data-w="ticks" aria-label="sixty-plus publications of one sentence"></div>
+  <p class="tiny" id="tickcap">each mark = one document that contains this sentence verbatim</p>
+
+  <div style="margin-top:52px">
+    <div class="rline" data-w="rl1"><div class="cnt">×74</div><div class="tx"><span class="mono">we weigh this against how agents actually fail in prod.</span><br><span class="tiny">editorial voice · appended to unrelated items across 74 documents</span></div></div>
+    <div class="rline" data-w="rl2"><div class="cnt">×36</div><div class="tx"><span class="mono">worth a read if you ship against the spec.</span><br><span class="tiny">editorial voice · 36 documents</span></div></div>
+    <div class="rline" data-w="rl3"><div class="cnt">×32</div><div class="tx"><span class="mono">we map this into the SOC runbook we operate.</span><br><span class="tiny">editorial voice · 32 documents</span></div></div>
+    <div class="rline" data-w="rl4"><div class="cnt">×29</div><div class="tx"><span class="mono">patch N-able N-central Authentication and verify the fix held.</span><br><span class="tiny" style="color:var(--template)">note the grammar: the template inserts a <b>vulnerability title</b> where a <b>package name</b> belongs. Nobody read it, because nobody wrote it.</span></div></div>
+  </div>
+</section>
+
+<!-- ======================= SLOP MAP ======================= -->
+<section id="map">
+  <p class="kick" data-w="mapk"><span class="sq f"></span>The slop map</p>
+  <h2 data-w="maph">Slop is not spread evenly. It pools.</h2>
+  <p class="lede">Same audit, three real documents, sentence by sentence. <span style="color:var(--frame)">Amber</span> = the wording already existed in other documents (the % is the share of that sentence's 5-word sequences found elsewhere). <span style="color:var(--survivor)">Green</span> = only this document says this.</p>
+  <div class="mapbar" id="maptabs" data-w="maptabs"></div>
+  <div class="docmeta" id="mapmeta"></div>
+  <div class="map" id="mapbody"></div>
+  <div class="legend" data-w="legend"><span><i style="background:var(--frame)"></i>inherited prose</span><span><i style="background:var(--survivor)"></i>original prose</span><span><span class="sh">100%</span> share of the sentence found in 3+ other documents</span></div>
+  <div class="callout" data-w="callout">
+    <p class="kick"><span class="sq t"></span>Why this is worse than lazy writing</p>
+    <p style="margin:0;color:#ffded2;font-size:16px">The digest series published daily at <span class="mono">12:00</span> for <b>87 days</b> — <b>35,604 words</b> — at <b>80.6% inherited text</b>. Because the frame wrote the sentences, no one noticed when a sentence stopped making sense. <code>patch Obstacles to Weaponizing PHP2Shell Likely Constrain Immediate Widespread Exploit and verify the fix held.</code> That is not a decision. That is a slot machine with a cron job.</p>
+  </div>
+</section>
+
+<!-- ======================= SCATTER ======================= -->
+<section id="axes">
+  <p class="kick" data-w="axk"><span class="sq"></span>Every document, two axes</p>
+  <h2 data-w="axh">Where the decisions were</h2>
+  <p class="lede">252 documents. <b>Horizontal</b> = how much of it was inherited (frame share). <b>Vertical</b> = how much checkable detail sits in the part that wasn't. Bottom-right is the bad corner: inherited frame, nothing verifiable inside the original remainder.</p>
+  <div class="chartbox" data-w="chart"><svg class="scatter" id="scatter" viewBox="0 0 1000 560" role="img" aria-label="Scatter plot of 252 documents by inherited frame share and anchor density"></svg></div>
+  <div class="legend" id="axlegend"></div>
+</section>
+
+<!-- ======================= THE TURN ======================= -->
+<section id="turn">
+  <p class="kick" data-w="turnk"><span class="sq s"></span>The counter-finding</p>
+  <h2 data-w="turnh">The slop isn't the model. It's the deadline.</h2>
+  <div class="grid g2" style="margin-top:26px">
+    <div>
+      <p class="lede" data-w="turna">An audit that only finds rot is not an audit, it's a prosecution. So we audited a second surface: <b>930 commit messages</b> the same agent wrote between 2026-02-17 and 2026-10-26.</p>
+      <p class="lede" style="margin-top:16px">Result: <b style="color:var(--survivor)" id="t-frames">—</b> of <b id="t-distinct">—</b> distinct commit frames were used <b>exactly once</b>. The agent's commit messages are specific, dated, and almost never recycled. Whatever is wrong here, it is not that the model can't tell the truth about its own work.</p>
+    </div>
+    <div class="card n" style="border-left-color:var(--survivor)" data-w="turnbox">
+      <h3>The number that explains everything</h3>
+      <p class="small" style="color:#cfe0f0">Documents written <i>because someone needed them</i>: <b style="color:var(--survivor)" id="t-unsched">—</b> inherited prose.</p>
+      <p class="small" style="color:#cfe0f0;margin-top:10px">Documents published <i>because a scheduler said so</i>: <b style="color:var(--frame)" id="t-sched">—</b> inherited prose.</p>
+      <p class="small" style="color:#fff;margin-top:16px"><b>Slop is not what a model writes. Slop is what happens when a schedule writes instead of a person.</b> The fix isn't a better model. It's a reason to publish, or nothing gets published.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= LEDGER ======================= -->
+<section id="ledger">
+  <p class="kick" data-w="ledk"><span class="sq"></span>The kill ledger</p>
+  <h2 data-w="ledh">All of it, including the parts that make us look bad</h2>
+  <p class="lede">Every audited document with its measurements and its verdict. Sortable. Nothing filtered out.</p>
+  <div class="controls">
+    <input id="q" placeholder="filter by path… e.g. digest, SKILL, README" data-w="ledq">
+    <button class="btn gh" data-f="all">All</button>
+    <button class="btn gh" data-f="TEMPLATE">Template</button>
+    <button class="btn gh" data-f="SURVIVOR">Survivor</button>
+  </div>
+  <div class="scroll"><table class="ledger"><thead><tr>
+    <th data-s="slop_index">slop</th><th data-s="file">document</th><th data-s="frame_share">inherited</th>
+    <th data-s="content_anchor_density">anchors/1k</th><th data-s="words">words</th><th data-s="verdict">verdict</th>
+  </tr></thead><tbody id="ledbody"></tbody></table></div>
+  <p class="tiny" id="ledcount" style="margin-top:12px"></p>
+</section>
+
+<!-- ======================= REBUILD ======================= -->
+<section id="rebuild">
+  <p class="kick" data-w="rbk"><span class="sq s"></span>The rebuild</p>
+  <h2 data-w="rbh">What a chosen sentence looks like</h2>
+  <p class="lede">An audit that stops at the diagnosis is criticism. Here is the same slot, written on purpose, with the reasoning shown. <span class="tiny">The rewrite is authored for this page — the measurements beside it are real.</span></p>
+  <div class="ba" style="margin-top:26px">
+    <div class="before" data-w="rbbefore">
+      <div class="h">inherited · appears in 74 documents</div>
+      <p class="q">we weigh this against how agents actually fail in prod.</p>
+      <p class="tiny" style="margin-top:16px">5-gram overlap with other documents: <b style="color:var(--frame)">100%</b><br>naming words: <b style="color:var(--frame)">0</b><br>inherited frames in document: <b style="color:var(--frame)">80.6%</b></p>
+    </div>
+    <div class="after" data-w="rbafter">
+      <div class="h">chosen · appears in 1 document</div>
+      <p class="q">The agent rewrote this file on 2026-10-19 and left the old version in place. Diff before you deploy.</p>
+      <p class="tiny" style="margin-top:16px">5-gram overlap with other documents: <b style="color:var(--survivor)">0%</b><br>naming words: <b style="color:var(--survivor)">6</b><br>inherited frames in document: <b style="color:var(--survivor)">0%</b></p>
+    </div>
+  </div>
+  <ol class="chain" data-w="chain">
+    <li><b>A sentence that works in any document works in no document.</b><span>Test applied first: if the line survives being pasted into an unrelated item, it carries no information about this one and gets deleted.</span></li>
+    <li><b>Name a thing that exists.</b><span>“agents fail in prod” is a category. Substitute the specific artefact, build or incident — the reader can go and check it.</span></li>
+    <li><b>Attach a date, a version or a path.</b><span>Anchors are the fingerprint of a decision. One date turns a claim into a record.</span></li>
+    <li><b>Say the uncomfortable part.</b><span>The useful line here is that an old version was left running. Generic reassurance is the cheapest thing a model can produce; the specific risk is the only thing worth printing.</span></li>
+    <li><b>Re-measure.</b><span>Inherited frames 80.6% → 0%. Checkable anchors in the original remainder: 21 → 34 per 1,000 words. If the numbers don't move, the rewrite was decoration.</span></li>
+  </ol>
+</section>
+
+<!-- ======================= RUN IT ======================= -->
+<section id="run">
+  <p class="kick" data-w="runk"><span class="sq"></span>Run it yourself</p>
+  <h2 data-w="runh">Paste any text you have ever published.</h2>
+  <p class="lede">The in-browser check measures the two signals that don't need a corpus: <b>checkable anchor density</b> and <b>filler/hedge density</b>. The full audit adds cross-document frame reuse, which needs the whole corpus — that's <span class="mono">engine.py</span>, below.</p>
+  <div class="runner" style="margin-top:22px" data-w="runner">
+    <textarea id="rtx" placeholder="Paste a draft. Or a launch post. Or the thing you're about to ship."></textarea>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn" onclick="runCheck()">Measure it</button>
+      <button class="btn gh" onclick="loadSample()">Load a real inherited document</button>
+    </div>
+    <div class="score" id="rout"></div>
+  </div>
+</section>
+
+<!-- ======================= METHOD + SPONSORS ======================= -->
+<section id="method">
+  <p class="kick" data-w="mk"><span class="sq"></span>Method, and what we did not do</p>
+  <h2 data-w="mh">Re-runnable, and honest about the edges</h2>
+  <div class="grid g2" style="margin-top:26px">
+    <div class="card" data-w="mcard">
+      <h3>Corpus rule</h3>
+      <p class="small" style="color:#cfe0f0" id="m-corpus"></p>
+      <p class="small" style="color:#cfe0f0;margin-top:12px">Excluded by name: <span class="mono">node_modules, .git, dist, venv, site-packages, lib, vendor, third_party, submodules, assets, public</span> — and every <span class="mono">LICENSE / NOTICE / COPYING / CHANGELOG</span>. Auditing an agent on its dependencies' prose would be dishonest; an earlier run did exactly that and put eight §LICENSE files at the top of the table. We threw that run away.</p>
+      <p class="small" style="color:#cfe0f0;margin-top:12px">Also thrown away: a first version that counted bare digits as anchors. It scored 220 of 252 documents as clean, which is the tell of a metric that measures nothing. The anchor set was rewritten to require <i>verifiable</i> specifics only.</p>
+      <pre><span class="c"># reproduce every number on this page</span>
+git clone &lt;repo&gt; &amp;&amp; cd non-slop
+python3 engine.py --root &lt;repo&gt;  <span class="c"># 252 docs, 253,673 words</span>
+python3 commits.py &lt;repo&gt;        <span class="c"># 930 commit frames</span>
+<span class="c"># stdlib only. no keys. deterministic.</span></pre>
+    </div>
+    <div class="grid" style="gap:14px" data-w="sponsors">
+      <div class="sp" data-w="sp-hermes">
+        <p class="role">Hermes Agent</p><div class="nm">The thing being audited, and the thing doing the audit</div>
+        <p class="small" style="color:#cfe0f0">Hermes walked the repository, wrote both engines, ran them, and generated this page. It is auditing its own output — which is the only way the question “can you explain your choices?” gets an honest answer: the explanation and the evidence come from the same system.</p>
+        <p class="st live">● RUNNING — this page is its output</p>
+      </div>
+      <div class="sp" data-w="sp-reducto">
+        <p class="role">Reducto</p><div class="nm">Makes the unreadable auditable — and locates slop by region</div>
+        <p class="small" style="color:#cfe0f0">The corpus contains <b id="m-bin">—</b> binary artifacts. No text engine can audit a PDF, a scan, a slide export or a generated image. Reducto's parse turns them into structured text so they can be measured at all — and because it returns <b>layout boxes</b>, slop can be scored <b>per region of a page</b> instead of per file. That is the difference between knowing a document is 80% inherited and seeing exactly which boxes on it are.</p>
+        <pre><span class="c"># POST https://platform.reducto.ai/parse</span>
+-H "Authorization: Bearer $REDUCTO_API_KEY"
+{"input": "&lt;url|upload_id&gt;", "chunk_mode": "page"}</pre>
+        <p class="st todo">○ NEEDS KEY — free credits on signup, no card. Client is written at <span class="mono">backends.py</span>; this page's map is the text-only preview of a per-region view.</p>
+      </div>
+      <div class="sp" data-w="sp-pangram">
+        <p class="role">Pangram</p><div class="nm">The authoritative verdict we deliberately left out of the headline</div>
+        <p class="small" style="color:#cfe0f0">Pangram answers “was this written by a machine?”. Our frame metric is deliberately not that question — it measures inheritance, not authorship, and we would rather ship a smaller true claim than a bigger borrowed one. Pangram's job here is to <b>validate the frame metric against a real detector</b>: if documents our method calls TEMPLATE do not score as machine-written, our method is wrong and we want to know.</p>
+        <pre><span class="c"># POST https://text.external-api.pangram.com/task</span>
+-H "x-api-key: $PANGRAM_API_KEY"
+{"text": "&lt;document&gt;", "model": "pangram-4"}
+<span class="c"># then GET /task/{id} until stage == STAGE_SUCCESS</span></pre>
+        <p class="st todo">○ NEEDS KEY — client written at <span class="mono">backends.py</span>, awaiting an api key. Until it lands, the style verdict is labelled PROXY everywhere and never presented as Pangram's.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="kick"><span class="sq"></span>Nobody chose this</p>
+  <p style="max-width:70ch;color:#cfe0f0">Built by the agent it audits, on 2026-10-27, in one session. The corpus is real, the numbers are reproducible, and the worst of it is on this page on purpose. <span class="mono" style="color:var(--dim)">NFA · DYOR</span></p>
+  <p class="tiny" style="margin-top:22px">Press <b>W</b> — every design choice on this page is annotated with its reason, its alternative, and its evidence.</p>
+</footer>
+
+</div>
+
+<script>
+const S = {};   // why-annotations
+function why(id, cat, q, choice, alt, reason, ev){ S[id]={cat,q,choice,alt,reason,ev}; }
+
+// ---------------- WHY ANNOTATIONS: the page answers the judges' question by construction --------
+why('kick','Orientation','Why a mono kicker saying whose event this is.','Named the event, the sponsors and the date in the first line.','A logo, a slogan, or nothing.','A reader arriving from a link with no context should know within one second whose table this is on. Sponsors first is also the accurate order: this exists because of the brief they wrote.','Event page, luma.com/enrexhqq');
+why('title','Title','Why “NOBODY CHOSE THIS” and why CHOOSE is the only coloured word.','The accusation is the product. One word carries the colour, so the eye lands on the mechanism, not the drama.','“AI Slop Audit” — accurate, forgettable, and commits to nothing.','The brief is about taste. Taste is exercised by choosing. A title that names the failure mode in three words is more useful than one that names the category in two.','headline: 74 documents share one sentence of editorial voice');
+why('herosub','Positioning','Why the subtitle promises “a map of where the choices were”.','Framed the output as a location, not a score.','“A score for every document” — turns the work into a leaderboard.','A score invites argument about the number. A map invites a walk. The brief asks what matters when you can generate anything; the answer is knowing where the choosing happened.','252 documents plotted on two axes, §Where the decisions were');
+why('thesis','Thesis','Why the thesis is set as a bordered paragraph rather than a headline.','Given the geometry of a quotation, indented on a cyan rule.','Set at display size like the h1.','A thesis is a claim, not a shout. It is also the sentence the whole page must earn back — so it is set at reading size and left to be tested by everything below it.','Frame share and anchor density definitions, §The two measurements');
+why('s1','Data','Why the first number is artifacts, not a percentage.','Led with the size of the sample.','Led with “11% inherited” — the most quotable number.','A percentage means nothing before you know what was measured. Sample size is the first honest fact; the quotable number comes third, after the reader knows the size of the denominator.','engine.py harvest: 252 text artifacts');
+why('s2','Data','Why words read is shown separately from artifacts.','Words, because that is what the rules were applied to.','Only the document count.','The rules operate on words and sentences, not files. Showing words makes the claim checkable against the method instead of hiding behind a file count.','253,673 words after masking and filtering');
+why('s3','Data','Why inherited words get the amber treatment.','Third position, coloured, defined by the method above.','Placed first, larger, with no definition.','This is the number a critic would attack first, so it goes where the definition is still on screen. Its label says “inherited”, not “slop” — the measurement is inheritance, and the label should not claim more.','28,198 words / 11.1% of the corpus');
+why('s4','Data','Why the fourth number is a sentence count of 74.','One sentence, copies published.','A percentage of templated documents (26%).','26% is easy to argue with. “This sentence appears in 74 documents” is not. One undeniable instance does more work than any rate.','repeated_sentences: max reuse = 74');
+why('briefk','Structure','Why the brief is re-quoted on the page.','Quoted the theme, question mark included.','Paraphrased it into our own framing.','The question is better than anything we could write, and quoting it makes this page a reply rather than a monologue.','“What matters when you can generate anything? Can you explain your choices?”');
+why('briefh','Structure','Why the theme is the h2 and not the project name.','The brief is the heading; the project is the answer underneath.','Our title as the heading.','Judges are comparing answers to one question. Repeating the question at the top of the section makes the comparison trivial and keeps us from grading our own work.','hackathon brief, luma.com/enrexhqq');
+why('briefa','Argument','Why the page states that taste is usually answered with adjectives.','Named the failure mode of the genre before doing something else.','Went straight to our method.','If the method is non-obvious it has to be justified before it is described. One sentence of “here is why the usual answer is empty” buys the reader’s attention for the explanation that follows.','—');
+why('briefbox','Argument','Why the two rules are stated with their exceptions built in.','Definitions include the degenerate case (“all frame → 0 by construction”).','Stated the rules and let the reader assume edge cases.','Metrics get distrusted for the edge cases they hide. Stating the degenerate case first is how a small true measure survives a hostile reading.','classify() in engine.py');
+why('onek','Emphasis','Why the single-sentence finding comes before the charts.','The most damning evidence is placed second, before any visual.','Led with the scatter plot, which is prettier.','A chart asks the reader to trust the axes. A sentence asks them to read. Evidence that needs no interpretation should arrive before evidence that does.','audit.json › repeated_sentences');
+why('oneh','Emphasis','Why the heading is a claim about language, not about the agent.','“Wording is not supposed to be reusable.”','“Our agent reused 74 sentences.”','The interesting claim is about how writing works, not about our specific failure. It generalises to every pipeline in the room, which is what makes the finding worth a judge’s time.','—');
+why('bigline','Type','Why the repeated sentence is set at 44px.','Set large, quoted, with the species of the failure in amber.','Listed it in the table with the other repeated sentences.','Reuse is invisible at small size and obvious at large size. Showing the sentence the size it should never have been printed is the argument; describing it would just be us explaining the joke.','shared=1.00 across 5-gram overlap');
+why('ticks','Visualisation','Why 74 ticks instead of the number 74.','One tick per document — countability you can see.','The numeral, larger.','A numeral is a claim. A wall of marks is an inventory. The point is not that the number is big, it is that these are 74 separate publications, each of which looked fine on its own.','span count from audit.json');
+why('rl1','Evidence','Why the ×74 line keeps the file-level detail.','Each repeated sentence shows its editorial role and its document count.','Just the sentence text.','The reason this matters is that these are the <i>editorial</i> lines — the ones meant to sound like a person. Labelling their role is what makes the reuse damning rather than merely repetitive.','template strings in pcm-intel-digest series');
+why('rl4','Evidence','Why the grammatical breakdown gets a colour of its own.','Called out the slot-machine substitution in the alarm colour.','Included it as one more repeated line.','This is the only line here that shows the mechanism failing: a vulnerability title dropped into a package-name slot. It is the difference between “repetitive” and “unread”.','“patch Obstacles to Weaponizing PHP2Shell … and verify the fix held.”');
+why('mapk','Visualisation','Why a per-sentence map instead of per-document scores.','The unit of judgement is the sentence.','Scored documents 0–100 and ranked them.','Taste does not fail at the document level, it fails sentence by sentence. A per-document score would have hidden the exact thing worth seeing: that inherited and chosen sentences sit next to each other in the same file.','spans[] — per-sentence frame classification');
+why('maph','Visualisation','Why “slop pools” rather than “slop is everywhere”.','Claimed concentration.','Claimed the corpus is broadly sloppy.','The data says the opposite of the dramatic claim: median frame share is 0%. The slop sits almost entirely in one scheduled series. Reporting the concentration is more useful — and more defensible — than the sweeping version.','mean frame 11.1% corpus-wide vs 80.6% in one series');
+why('maptabs','Interaction','Why real documents are switchable rather than described — and why three of them.','Three real files, one click apart: worst, best, and a middle.','One example, described in prose.','One example only proves the method exists. A pair proves it discriminates. The middle one shows the boundary is not just “our digests versus our skills files”. Contrast is the argument — flipping between an inherited document and a chosen one in one click does more than any sentence we could write about the difference.','audit.json documents with spans[]');
+why('legend','Legibility','Why the two colours are amber and green and nothing else.','Two semantic colours for a two-state claim, plus the one accent already in use.','A gradient from red to green.','A gradient implies a scale we did not measure. Frame and content is a binary classification, and the legend should not imply precision the method does not have.','classify() thresholds');
+why('callout','Honesty','Why the harshest judgement on the page is aimed at our own pipeline.','Named the cron, the number of days and the word count.','Softened it.','We are asking a judge to trust a metric that is unflattering to us. The clearest way to earn that is to make the unflattering finding specific enough to be verified and specific enough to embarrass.','87 documents · 35,604 words · 80.6% inherited · 12:00 daily');
+why('axk','Visualisation','Why the scatter is titled after axes, not after a conclusion.','Labelled the chart by what it plots.','“Most of the corpus is clean.”','Letting the reader place the dots themselves is more convincing than captioning the shape. The bad corner is visible without us pointing at it.','252 points from audit.json');
+why('axh','Visualisation','Why the vertical axis is anchor density and not a quality score.','Plotted a measurable thing.','Plotted an overall “quality” score.','There is no quality score. Anchor density is a count of verifiable specifics, which is exactly what it says. Naming the axis after the measurement keeps the chart honest.','content_anchor_density per 1,000 non-frame words');
+why('chart','Visualisation','Why the chart is monochrome-on-navy with hairline axes.','Grid at 5% opacity, no fills, no shadows, dots coloured only by verdict.','Dark dashboard styling with gradients and drop shadows.','Decoration competes with data for attention. On a page arguing for restraint, the chart has to be the most restrained object on it or the argument is contradicted by its own illustration.','—');
+why('turnk','Structure','Why a section is spent reporting good news about the agent.','Ran the same audit on a second surface and published the result even though it weakens the story.','Reported only the doc corpus.','An audit that finds only rot is a prosecution with a method. Publishing the surface where the agent is clean is what makes the methods trustworthy on the surface where it is not.','commits.py › 930 commits, 813 single-use frames');
+why('turnh','Insight','Why the conclusion blames the schedule, not the model.','Moved the causal claim from the system to the process.','Blamed the agent, which is the easy story.','The same agent produced both surfaces. The variable is not the model, it is whether a person needed the output. That is a finding a judge can act on in their own pipeline, which is worth more than a confession.','11.1% corpus-wide vs 80.6% in the scheduled series');
+why('turnbox','Insight','Why the two rates are shown side by side.','Put the two percentages in one card, unlabelled by drama.','Stated the conclusion without the supports.','The conclusion is only credible if the two numbers are adjacent. Separating them would make the sentence an opinion.','engine.py + commits.py');
+why('ledk','Honesty','Why “kill ledger” and not “results”.','Used the vocabulary of a decision, because every row could have been killed and was not.','“Appendix” or “Full results”.','The page’s thesis is that choosing is the scarce act. A table of things that survived an audit is a record of choices not made a second time.','—');
+why('ledh','Honesty','Why all 252 rows are published.','Nothing filtered, including the worst.','Published the worst 20.','Any filter is an editorial decision, and this page is about editorial decisions. Showing the whole table removes the suspicion that the rows were selected.','audit.json › documents');
+why('ledq','Interaction','Why filtering is text-based rather than by score.','Search by path.','Advanced score filters, sliders, facets.','One control that a judge will actually use beats four they will not. The interesting action is looking up a document you recognise.','—');
+why('rbk','Structure','Why the page ends with a rewrite.','Finished with the constructive move.','Finished with the evidence.','The brief asks for value beyond critique. Ending on a worked example, with its reasoning numbered, leaves the reader with a method rather than a score.','§The rebuild');
+why('rbbefore','Comparison','Why the “before” side keeps its numbers.','Measured both sides with the same two rules.','Showed only the prose difference.','Prose difference is a matter of taste; measured difference is not. Using one set of rules on both sides is what makes the comparison an argument instead of a preference.','5-gram overlap and anchor density, both sides');
+why('rbafter','Comparison','Why the rewrite is labelled as authored for this page.','Disclosed that the replacement sentence is a demonstration.','Presented it as a system output.','Every other number here is machine-produced. One label prevents the reader from having to guess which parts are which, and a page arguing for provenance cannot be sloppy about its own.','—');
+why('chain','Reasoning','Why the reasoning is a numbered chain and not a paragraph.','Five steps, each separately refutable.','A paragraph explaining the rewrite.','The question is “can you explain your choices?” — a paragraph invites agreement, a chain invites inspection. A judge who can disagree with step 3 is engaging, which is the win condition.','—');
+why('runner','Interaction','Why a measurement box instead of a generation box.','Gave the visitor a ruler.','Let the visitor generate something and admire it.','Generation is the cheap thing now — the brief says so. Handing someone the measurement instead of another sample is the only move consistent with the argument.','browser check: anchors + filler + rhythm only');
+why('mcard','Honesty','Why the discarded runs are documented.','Wrote down the wrong versions and why they were wrong.','Showed only the final method.','The first run put eight licence files at the top and the second called 220 documents clean. Both are the same failure — a metric measuring itself. Publishing the corrections is the evidence that the final numbers were tested against something.','LICENSE exclusion; anchor set rewritten');
+why('sp-hermes','Sponsors','Why Hermes is described as both subject and instrument.','Named the recursion plainly.','Described Hermes as the tool that built the page.','The recursion is the point and hiding it would be the sloppiest thing here: the same system produced the corpus, the critique, and the artifact. “Explain your choices” is only a hard question if the explainer is the chooser.','—');
+why('sp-reducto','Sponsors','Why Reducto is framed around layout boxes, not parsing.','Chose the capability that changes the analysis.','“Reducto parses documents.”','Parsing is a feature; per-region scoring is a new capability. The honest version of the pitch is what the project would do differently with it, not what the API does.','binary artifacts in the corpus need a parser before they can be measured');
+why('sp-pangram','Sponsors','Why Pangram is presented as a validator, not a headline.','Demoted our own metric’s claim and gave Pangram the check.','Headlined “Pangram agrees our documents are AI-written”.','We have not run it, so we cannot claim agreement. Saying plainly what it would be used for, and labelling everything unverified until then, is the only version of this section that survives being asked a follow-up.','client in backends.py, key pending');
+why('mk','Honesty','Why method is a first-class section and not a footnote.','Gave the rules their own section with the code.','Put the caveats in small print.','This page’s product is a measurement. A measurement without its method is an opinion, and the brief is explicitly a test of whether we can explain our choices.','engine.py, commits.py');
+why('mh','Honesty','Why the heading admits the edges.','“Re-runnable, and honest about the edges.”','“Methodology”.','The section exists to describe uncertainty. Naming that in the heading sets the reader up to believe the rest of it.','—');
+why('m-corpus','Honesty','Why the corpus rule is written as a sentence, not a sentence-plus-regex.','Plain English bounds.','The regex.','Bounds should be checkable by a human without reading code. The regex is in the repository for anyone who wants it.','DOC_RX / EXCLUDE_DIR in engine.py');
+why('sponsors','Sponsors','Why the three sponsors get the same layout and the same honesty standard.','Equal cards, each with its real status.','Different sizes, or only the ones we integrated.','Two of the three integrations are waiting on keys. Marking that in the same visual weight as the running one is the only way this page’s central claim — that provenance matters — applies to the page itself.','—');
+
+// ---------------- load real data ----------------
+const VBAR = {TEMPLATE:'#ff5c39',THIN:'#ffc247',VAPOUR:'#b98cff',PASSABLE:'#6fd0ea',SURVIVOR:'#25e6a8'};
+let AUDIT=null, COMMITS=null, DOCS=[], filter='all', sortBy='slop_index', asc=false;
+
+const nf = n => n.toLocaleString('en-US');
+const pc = n => (n*100).toFixed(1)+'%';
+
+async function boot(){
+  try{
+    AUDIT = await (await fetch('audit.json')).json();
+    COMMITS = await (await fetch('commits.json')).json();
+  }catch(e){
+    document.getElementById('k-art').textContent='data offline';
+    console.error(e); return;
+  }
+  DOCS = AUDIT.documents || [];
+  const h = AUDIT.headline, c = AUDIT.corpus;
+
+  document.getElementById('k-art').textContent   = nf(c.text_artifacts);
+  document.getElementById('k-words').textContent = nf(c.words_audited);
+  document.getElementById('k-frame').textContent = nf(h.frame_words);
+  document.getElementById('k-rep').textContent   = '×'+h.max_sentence_reuse;
+
+  document.getElementById('t-frames').textContent   = nf(COMMITS.single_use_frames);
+  document.getElementById('t-distinct').textContent = nf(COMMITS.distinct_frames);
+  // the honest comparison: same measurement, one series removed
+  const offSeries = DOCS.filter(d => !String(d.series||'').startsWith('pcm-intel-digest'));
+  const offWords  = offSeries.reduce((a,d)=>a+d.words,0);
+  const offFrame  = offSeries.reduce((a,d)=>a+d.frame_words,0);
+  const unsched   = offWords ? offFrame/offWords : 0;
+  const sched     = AUDIT.series['pcm-intel-digest'] ? AUDIT.series['pcm-intel-digest'].mean_frame : 0;
+  document.getElementById('t-unsched').textContent = pc(unsched)+' inherited';
+  document.getElementById('t-sched').textContent   = pc(sched)+' inherited';
+  const bin = Object.entries(c.binary_artifacts).reduce((a,[k,v])=>a+v,0);
+  document.getElementById('m-bin').textContent = nf(bin);
+  document.getElementById('m-corpus').textContent =
+    `agent-authored .md/.mdx/.rst/.txt prose of ${nf(h.frame_words)>0?'60':'60'}+ words. ${nf(c.text_artifacts)} documents survived; ${nf(c.excluded.too_short||0)} were dropped as too short and ${nf(c.excluded.not_prose||0)} as not prose.`;
+
+  buildTicks(h.max_sentence_reuse);
+  buildMapTabs();
+  drawScatter();
+  buildLegend();
+  renderLedger();
+}
+boot();
+
+function buildTicks(n){
+  const el=document.getElementById('ticks'); let h='';
+  for(let i=0;i<n;i++) h+='<span class="tick" title="document '+(i+1)+' of '+n+'" style="opacity:'+(0.55+0.45*(i/n)).toFixed(2)+'"></span>';
+  el.innerHTML=h;
+  document.getElementById('tickcap').textContent = n+' marks · one per document containing this sentence verbatim';
+}
+
+/* -------- the map -------- */
+let MAPDOCS=[];
+function buildMapTabs(){
+  MAPDOCS = DOCS.filter(d=>d.spans && d.spans.length);
+  // Three deliberate exemplars, in the order that makes the argument:
+  //   all-frame  ->  mixed  ->  all-content
+  const picks=[];
+  const add=d=>{ if(d && !picks.some(p=>p.path===d.path)) picks.push(d); };
+  add([...MAPDOCS].sort((a,b)=>b.frame_share-a.frame_share)[0]);
+  add(MAPDOCS.filter(d=>d.frame_share>=0.20 && d.frame_share<=0.70)
+             .sort((a,b)=>Math.abs(a.frame_share-0.45)-Math.abs(b.frame_share-0.45))[0]);
+  add(MAPDOCS.filter(d=>d.frame_share<=0.05)
+             .sort((a,b)=>b.content_anchor_density-a.content_anchor_density)[0]);
+  for(const d of [...MAPDOCS].sort((a,b)=>b.frame_share-a.frame_share)){ if(picks.length>=3)break; add(d); }
+  const tabs=document.getElementById('maptabs'); tabs.innerHTML='';
+  const NAMES=['inherited throughout','mixed — inherited and chosen side by side','chosen throughout'];
+  picks.forEach((d,i)=>{
+    const b=document.createElement('button');
+    b.className='tab'+(i?'':' on');
+    b.title=NAMES[i]||'';
+    b.innerHTML=(i+1)+' · '+(NAMES[i]||'')+' &nbsp;<span style="opacity:.7">'+(d.frame_share*100).toFixed(0)+'% inherited</span>';
+    b.onclick=()=>{[...tabs.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');paintMap(d);};
+    tabs.appendChild(b);
+  });
+  if(picks[0]) paintMap(picks[0]);
+}
+function paintMap(d){
+  document.getElementById('mapmeta').innerHTML =
+    `<span>file <b>${d.file.replace(/^.*\//,'')}</b></span><span>words <b>${nf(d.words)}</b></span>`+
+    `<span>inherited <b style="color:var(--frame)">${pc(d.frame_share)}</b></span>`+
+    `<span>anchors/1k in original part <b style="color:var(--survivor)">${d.content_anchor_density.toFixed(1)}</b></span>`+
+    `<span>verdict <b style="color:${VBAR[d.verdict]}">${d.verdict}</b></span>`;
+  const body=document.getElementById('mapbody');
+  body.innerHTML = d.spans.map(s=>{
+    const cls = s.frame?'frame':'content';
+    const badge = s.frame?`<span class="sh">${Math.round(s.shared*100)}% inherited</span>`:`<span class="sh">only here</span>`;
+    return `<p class="${cls}">${esc(s.t)}${badge}</p>`;
+  }).join('');
+}
+const esc = s => s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+/* -------- scatter -------- */
+function drawScatter(){
+  const svg=document.getElementById('scatter');
+  const W=1000,H=560, L=78,R=26,T=26,B=56;
+  const maxX=Math.max(...DOCS.map(d=>d.frame_share),0.1);
+  const maxY=Math.max(...DOCS.map(d=>Math.sqrt(d.content_anchor_density)),1);
+  const X=v=>L+(v/maxX)*(W-L-R);
+  const Y=v=>H-B-(v/maxY)*(H-T-B);
+  let g='';
+  // grid
+  for(let i=0;i<=5;i++){
+    const x=L+(i/5)*(W-L-R); g+=`<line x1="${x}" y1="${T}" x2="${x}" y2="${H-B}" stroke="rgba(0,212,255,.13)" stroke-width="1"/>`;
+    g+=`<text x="${x}" y="${H-B+20}" fill="#5d7794" font-size="11" font-family="ui-monospace,monospace" text-anchor="middle">${(maxX*i/5*100).toFixed(0)}%</text>`;
+  }
+  for(let i=0;i<=4;i++){
+    const y=H-B-(i/4)*(H-T-B); g+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="rgba(0,212,255,.13)" stroke-width="1"/>`;
+    g+=`<text x="${L-12}" y="${y+4}" fill="#5d7794" font-size="11" font-family="ui-monospace,monospace" text-anchor="end">${(maxY*i/4).toFixed(0)}</text>`;
+  }
+  // danger corner
+  g+=`<rect x="${X(maxX*0.6)}" y="${Y(0)}" width="${X(maxX)-X(maxX*0.6)}" height="${Y(maxY*0.25)-Y(0)}" fill="rgba(255,92,57,.07)" stroke="rgba(255,92,57,.28)" stroke-dasharray="4 4"/>`;
+  g+=`<text x="${X(maxX*0.6)+12}" y="${Y(maxY*0.25)-10}" fill="#ff5c39" font-size="11.5" font-family="ui-monospace,monospace">INHERITED FRAME · NOTHING CHECKABLE INSIDE</text>`;
+  // dots
+  for(const d of DOCS){
+    const cx=X(d.frame_share), cy=Y(Math.sqrt(d.content_anchor_density));
+    g+=`<circle class="dot" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3.1" fill="${VBAR[d.verdict]||'#6fd0ea'}" fill-opacity=".82">`+
+       `<title>${esc(d.file)} · inherited ${(d.frame_share*100).toFixed(0)}% · anchors ${d.content_anchor_density.toFixed(0)}/1k · ${d.verdict}</title></circle>`;
+  }
+  // axes labels
+  g+=`<text x="${(L+W-R)/2}" y="${H-14}" fill="#7f9cbb" font-size="11.5" font-family="ui-monospace,monospace" text-anchor="middle">← INHERITED FRAME SHARE (higher = the wording already existed elsewhere) →</text>`;
+  g+=`<text transform="translate(20,${(T+H-B)/2}) rotate(-90)" fill="#7f9cbb" font-size="11.5" font-family="ui-monospace,monospace" text-anchor="middle">← CHECKABLE ANCHORS PER 1,000 ORIGINAL WORDS →</text>`;
+  svg.innerHTML=g;
+}
+function buildLegend(){
+  const counts={}; DOCS.forEach(d=>counts[d.verdict]=(counts[d.verdict]||0)+1);
+  document.getElementById('axlegend').innerHTML = Object.entries(counts).sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>`<span><i style="background:${VBAR[k]}"></i>${k} <span class="mono" style="color:var(--dim-2)">${v}</span></span>`).join('');
+}
+
+/* -------- ledger -------- */
+function renderLedger(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  let rows=DOCS.filter(d=>filter==='all'||d.verdict===filter);
+  if(q) rows=rows.filter(d=>d.path.toLowerCase().includes(q));
+  rows=[...rows].sort((a,b)=>{
+    const A=a[sortBy],B=b[sortBy];
+    const c = (typeof A==='string')? String(A).localeCompare(String(B)) : (A-B);
+    return asc?c:-c;
+  });
+  document.getElementById('ledbody').innerHTML = rows.map(d=>`
+    <tr>
+      <td class="num"><b style="color:${VBAR[d.verdict]}">${d.slop_index.toFixed(1)}</b></td>
+      <td class="fn">${d.path}</td>
+      <td><div class="bar"><i style="width:${(d.frame_share*100).toFixed(1)}%;background:${d.frame_share>=.6?'var(--frame)':'rgba(255,122,69,.4)'}"></i></div>
+          <span class="mono" style="font-size:11px;color:var(--dim)">${(d.frame_share*100).toFixed(0)}%</span></td>
+      <td class="num">${d.content_anchor_density.toFixed(0)}</td>
+      <td class="num">${nf(d.words)}</td>
+      <td><span class="v ${d.verdict}">${d.verdict}</span></td>
+    </tr>`).join('');
+  document.getElementById('ledcount').textContent =
+    `${rows.length} of ${DOCS.length} documents shown · sorted by ${sortBy} ${asc?'ascending':'descending'}`;
+}
+document.getElementById('q').addEventListener('input',renderLedger);
+document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderLedger();});
+document.querySelectorAll('.ledger th').forEach(th=>th.onclick=()=>{
+  const s=th.dataset.s; if(!s)return; asc = (sortBy===s)? !asc : false; sortBy=s; renderLedger();
+});
+
+/* -------- in-browser check (honest scope) -------- */
+const ANCH = [
+ [/https?:\/\/\S+/g,'url'], [/(?<![\w.])@[A-Za-z0-9_]{2,15}\b/g,'handle'], [/\$[A-Za-z][A-Za-z0-9_]{1,9}\b/g,'ticker'],
+ [/\b\d{4}-\d{2}-\d{2}\b/g,'date'], [/\bv?\d+\.\d+(?:\.\d+)*\b/g,'version'], [/\b\d[\d,._]*\s?(?:%|x|h|hrs?|d|days?|mb|gb|tokens?|words?|users?)\b/gi,'quantity'],
+ [/[$€£]\s?\d[\d,._]*/g,'money'], [/\b0x[0-9a-fA-F]{6,}\b/g,'address'], [/\b[\w.-]+\.(?:ts|js|py|md|json|sol|sh|html)\b/g,'file'],
+ [/`[^`\n]{2,}`/g,'code']
+];
+const FILL=["leverage","seamless","robust","comprehensive","holistic","pivotal","crucial","vital","empower","unlock","foster","navigate","landscape","realm","tapestry","testament","delve","underscore","highlight","showcase","elevate","streamline","optimize","synergy","ecosystem","paradigm","innovative","cutting-edge","transformative","furthermore","moreover","additionally","ultimately","essentially","significantly","notably","importantly","game-changing","reimagine","revolutionize","democratize"];
+const HEDGE=/\b(it'?s worth noting|needless to say|at the end of the day|in today'?s|let'?s dive in|game[- ]chang\w+|unlock\w* the (?:power|potential)|we'?re excited to|stay tuned|the future of)\b/gi;
+
+function runCheck(){
+  const t=document.getElementById('rtx').value||'';
+  const words=(t.match(/\S+/g)||[]).length||1;
+  let anchors=0, hits={};
+  for(const [rx,nm] of ANCH){ const m=t.match(rx); if(m){anchors+=m.length; hits[nm]=(hits[nm]||0)+m.length;} }
+  const low=t.toLowerCase();
+  const filler=FILL.reduce((a,w)=>a+(low.split(w).length-1),0);
+  const hedges=(t.match(HEDGE)||[]).length;
+  const sents=t.split(/(?<=[.!?])\s+/).filter(s=>s.split(/\s+/).length>2);
+  const lens=sents.map(s=>s.split(/\s+/).length);
+  const mean=lens.reduce((a,b)=>a+b,0)/(lens.length||1);
+  const sd=lens.length>1?Math.sqrt(lens.reduce((a,b)=>a+(b-mean)**2,0)/lens.length):0;
+  const dens=anchors/words*1000, fd=filler/words*1000, hd=hedges/words*1000;
+  const verdict = (fd>18||hd>6) ? ['FILLER-HEAVY','#ff5c39'] : (dens<8 ? ['THIN','#ffc247'] : dens>=20 ? ['ANCHORED','#25e6a8'] : ['PASSABLE','#6fd0ea']);
+  document.getElementById('rout').innerHTML = [
+    [dens.toFixed(1),'anchors / 1,000 words', dens>=20?'var(--survivor)': dens<8?'var(--thin)':'var(--ink)'],
+    [fd.toFixed(1),'filler / 1,000 words', fd>18?'var(--template)':'var(--ink)'],
+    [hd.toFixed(1),'hedges / 1,000 words', hd>6?'var(--template)':'var(--ink)'],
+    [sents.length,'sentences', 'var(--ink)'],
+    [sd.toFixed(1),'rhythm (sentence-length σ)', sd<3?'var(--thin)':'var(--ink)'],
+    ['<span style="font-size:16px">'+verdict[0]+'</span>','browser verdict, 2 of 4 signals', verdict[1]]
+  ].map(([v,l,c])=>`<div class="s"><b style="color:${c}">${v}</b><span>${l}</span></div>`).join('')
+   + `<p class="tiny" style="grid-column:1/-1;margin:12px 0 0">This browser check <b>cannot</b> measure cross-document frame reuse — that is the headline metric and it needs the whole corpus. A low score here means “specific and unhedged”, not “original”.</p>`;
+  if(!anchors && !t.trim()) document.getElementById('rout').innerHTML='<p class="tiny">Nothing to measure. Paste something you have published.</p>';
+}
+function loadSample(){
+  const d=[...DOCS].sort((a,b)=>b.slop_index-a.slop_index).find(x=>x.head);
+  const dig=DOCS.find(x=>x.series && x.series.indexOf('pcm-intel-digest')===0 && x.head);
+  document.getElementById('rtx').value=(dig&&dig.head?dig.head:d.head||'')+'\n\nwe weigh this against how agents actually fail in prod.\nworth a read if you ship against the spec.';
+  runCheck();
+}
+
+/* -------- WHY mode -------- */
+const pbody=document.getElementById('pbody');
+function openWhy(id){
+  const w=S[id]; if(!w) return;
+  pbody.innerHTML=`<p class="pc">${w.cat} · design decision</p><h4>${w.q}</h4><dl>
+    <dt>What we did</dt><dd>${w.choice}</dd>
+    <dt>What we didn't</dt><dd>${w.alt}</dd>
+    <dt>Why</dt><dd>${w.reason}</dd>
+    <dt>Evidence</dt><dd class="mono" style="font-size:12.5px;color:#9fb8d0">${w.ev}</dd></dl>`;
+  document.getElementById('panel').classList.add('on');
+}
+function closeWhy(){document.getElementById('panel').classList.remove('on');}
+document.getElementById('whybtn').onclick=()=>{
+  const on=document.body.classList.toggle('why');
+  document.getElementById('whybtn').classList.toggle('on',on);
+  document.getElementById('whybtn').textContent = on? 'WHY ● on — click any ?':'WHY ▸ press W';
+  if(!on) closeWhy();
+};
+document.addEventListener('keydown',e=>{ if((e.key==='w'||e.key==='W')&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();document.getElementById('whybtn').click();} });
+document.addEventListener('click',e=>{
+  // never swallow a real control: buttons, inputs, links and table headers must
+  // keep working while WHY mode is on. Only bare regions open the annotation.
+  if(e.target.closest('button,input,textarea,a,select,.tab,[data-f],th,label')) return;
+  const el=e.target.closest('[data-w]'); if(!el||!document.body.classList.contains('why'))return;
+  e.preventDefault(); e.stopPropagation(); openWhy(el.dataset.w);
+},true);
+document.addEventListener('click',e=>{
+  if(document.getElementById('panel').classList.contains('on') && !e.target.closest('#panel') && !e.target.closest('[data-w]')) closeWhy();
+});
+</script>
+</body>
+</html>

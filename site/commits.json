@@ -1,0 +1,1033 @@
+{
+ "commits": 930,
+ "first": "2026-02-17",
+ "last": "2026-10-26",
+ "kinds": {
+  "data": 21,
+  "fix": 213,
+  "other": 417,
+  "ops": 18,
+  "feat": 204,
+  "chore": 46,
+  "docs": 10,
+  "agent": 1
+ },
+ "templated_commits": 103,
+ "templated_share": 0.1108,
+ "distinct_frames": 823,
+ "frames_used_3plus": 3,
+ "single_use_frames": 813,
+ "empty_body_commits": 390,
+ "empty_body_share": 0.4194,
+ "mean_words": 21.9,
+ "mean_anchors": 1.68,
+ "top_frames": [
+  {
+   "n": 97,
+   "sample": "Initial plan",
+   "first": "2026-02-19",
+   "last": "2026-05-26",
+   "kinds": {
+    "other": 97
+   },
+   "shas": [
+    "d38b560b25",
+    "82e4419904",
+    "c1d9e868b6",
+    "2a3698cf31",
+    "d548b688cc",
+    "f8595bde69"
+   ]
+  },
+  {
+   "n": 3,
+   "sample": "Merge pull request #445 from BasedNUKEM/feature/devio-pixel-spiral-loader-v2-20260528T013354Z",
+   "first": "2026-05-27",
+   "last": "2026-05-27",
+   "kinds": {
+    "other": 3
+   },
+   "shas": [
+    "d0c290d06d",
+    "bd07c04f04",
+    "f6734d6883"
+   ]
+  },
+  {
+   "n": 3,
+   "sample": "Merge pull request #413 from BasedNUKEM/copilot/fix-comments-in-review-thread",
+   "first": "2026-05-20",
+   "last": "2026-05-22",
+   "kinds": {
+    "other": 3
+   },
+   "shas": [
+    "af13f1fa59",
+    "628061826d",
+    "7068f07e7b"
+   ]
+  }
+ ],
+ "recent": [
+  {
+   "sha": "ab231b1520",
+   "date": "2026-10-26",
+   "subject": "alpha wave 2026-10-26 19:19Z: 2 posted (Base Trencher Grants + sentiment; agent credit on Robinhood Chain via Priors/Borro)",
+   "kind": "data",
+   "template": false,
+   "words": 18
+  },
+  {
+   "sha": "739e5201c2",
+   "date": "2026-10-26",
+   "subject": "trench-log: Gheist GitHub-token secret exfil (post 2114760562064433617)",
+   "kind": "data",
+   "template": false,
+   "words": 38
+  },
+  {
+   "sha": "40f0095090",
+   "date": "2026-10-26",
+   "subject": "mentions: add 5th source (TweetDetail sweep of own posts) - feed+search silently dropped @0xArseneLupin reply",
+   "kind": "data",
+   "template": false,
+   "words": 103
+  },
+  {
+   "sha": "93a328c615",
+   "date": "2026-10-24",
+   "subject": "alpha post log 2026-10-24: Pillow CVE-2026-112900 (post 2114036844921077984)",
+   "kind": "data",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "b5addeb7a9",
+   "date": "2026-10-24",
+   "subject": "fix(social): stop flagging genuine 'allocation' mentions as airdrop spam",
+   "kind": "fix",
+   "template": false,
+   "words": 85
+  },
+  {
+   "sha": "48906df757",
+   "date": "2026-10-23",
+   "subject": "alpha-post: agent NFTs live in Base Rooms OS (@baserooms) - post 2113775261858849242",
+   "kind": "data",
+   "template": false,
+   "words": 12
+  },
+  {
+   "sha": "18663204c4",
+   "date": "2026-10-23",
+   "subject": "alpha wave 2026-10-23 19:21Z: Kimi K3.1 Pro open-weight frontier post + x402 population-census reality check (2 posted, verified); log + dedup updated",
+   "kind": "data",
+   "template": false,
+   "words": 22
+  },
+  {
+   "sha": "d1c718359d",
+   "date": "2026-10-23",
+   "subject": "alpha auto-poster 2026-10-23: Signal CVE-2026-113380 post (+trench-log, posted-tweets, route lesson)",
+   "kind": "data",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "84635b6a62",
+   "date": "2026-10-22",
+   "subject": "alpha wave 2026-10-22 19:12Z: post bank-AI-agents scoop (Axios) + Base Denim 200ms blocks; log 2 posts",
+   "kind": "data",
+   "template": false,
+   "words": 16
+  },
+  {
+   "sha": "0c16074161",
+   "date": "2026-10-22",
+   "subject": "avantis-agent-watch run#57 log: official Veranta MCP posted (false-positive 7702 authority addresses tripped the scanner)",
+   "kind": "other",
+   "template": false,
+   "words": 14
+  },
+  {
+   "sha": "12a49daf03",
+   "date": "2026-10-22",
+   "subject": "avantis-agent-watch: add whale ledger / router-event / delegate-census scan scripts",
+   "kind": "other",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "e3c82016b0",
+   "date": "2026-10-22",
+   "subject": "mentions: ignore Hyperliquid $HYPE promo bot (2113319283249873011) - no actual @D0xedDevi0 tag, resurfaced as open loop",
+   "kind": "data",
+   "template": false,
+   "words": 16
+  },
+  {
+   "sha": "79ab292c9e",
+   "date": "2026-10-22",
+   "subject": "alpha rip: PHP2Shell CVE-2026-109618/109619 post (2113308128750227908) + log",
+   "kind": "data",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "3be3f9ed30",
+   "date": "2026-10-21",
+   "subject": "alpha wave 2026-10-21 19:17Z: 0 posted (344/226 write-block + raw 402), 2 bangers held (Mastercard Agent Pay for Machines x402; Always-On Dollar 73% banking-hours)",
+   "kind": "data",
+   "template": false,
+   "words": 24
+  },
+  {
+   "sha": "43dcc03945",
+   "date": "2026-10-20",
+   "subject": "alpha: post PAN-OS CVE-2026-0257 vCenter/VMDK pivot (intel: @PCMedicalist) + log",
+   "kind": "data",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "920196db08",
+   "date": "2026-10-19",
+   "subject": "trench-alpha: post XDC x Concordium agent identity (2112328249993028002)",
+   "kind": "data",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "181e88bd88",
+   "date": "2026-10-19",
+   "subject": "alpha wave 2026-10-19: Thunes x Coinbase x Base payouts + Meta Muse permission failure",
+   "kind": "data",
+   "template": false,
+   "words": 14
+  },
+  {
+   "sha": "29fe9c7337",
+   "date": "2026-10-19",
+   "subject": "monitor(x-mentions): add SearchTimeline(to:self) as 4th additive mention source",
+   "kind": "ops",
+   "template": false,
+   "words": 94
+  },
+  {
+   "sha": "b1758ddcf7",
+   "date": "2026-10-18",
+   "subject": "alpha wave 2026-10-18: RWA perps on Base + Coinbase for Agents index perps (2 posted)",
+   "kind": "data",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "f53803b007",
+   "date": "2026-10-16",
+   "subject": "trench log + posted-tweets: CVE-2026-110447 Collabora/Nextcloud post (2111239451280314696)",
+   "kind": "data",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "09a2c90abf",
+   "date": "2026-10-16",
+   "subject": "alpha wave 2026-10-16: Marqeta x Coinbase stablecoin cards on Base + OpenAI Sepolia wallet incident (2 posted)",
+   "kind": "data",
+   "template": false,
+   "words": 17
+  },
+  {
+   "sha": "06fb4db74c",
+   "date": "2026-10-16",
+   "subject": "alpha post 2026-10-16: CVE-2026-99999 PwnEscape (kernel/host isolation)",
+   "kind": "data",
+   "template": false,
+   "words": 7
+  },
+  {
+   "sha": "bc3e99a78a",
+   "date": "2026-10-16",
+   "subject": "feat(in-the-loop): wallet picker, live access controls and reviewed social API",
+   "kind": "feat",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "9ccddd5e48",
+   "date": "2026-10-16",
+   "subject": "avantis-agent-watch: 2026-10-16 10:15 run \u2014 first wallet adopts Veranta agent template + thirdfy-tagged order (posted)",
+   "kind": "other",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "586c945449",
+   "date": "2026-10-16",
+   "subject": "the-loop: social network for Loopers (farcaster-style, chain-verified identity)",
+   "kind": "other",
+   "template": false,
+   "words": 88
+  },
+  {
+   "sha": "6403299548",
+   "date": "2026-10-16",
+   "subject": "mentions: ignore courtpaul33 promo shill 2108567576900964788 (verified unanswered sweep 2026-10-16)",
+   "kind": "data",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "0ce816f199",
+   "date": "2026-10-16",
+   "subject": "avantis-agent-watch: 2026-10-16 02:00 UTC run (posted 2110914288366002569, rail idle @6387, 0 new delegators)",
+   "kind": "other",
+   "template": false,
+   "words": 13
+  },
+  {
+   "sha": "92c5ae7ec0",
+   "date": "2026-10-15",
+   "subject": "avantis watch: agent-rail sender blockscan + relay analyzer (rail never emits MOI as trader topic1)",
+   "kind": "other",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "9eff8c6b87",
+   "date": "2026-10-15",
+   "subject": "alpha wave 2026-10-15: tokenized-stock scale post + Langflow RCE post",
+   "kind": "data",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "6bed69407a",
+   "date": "2026-10-07",
+   "subject": "fix(contracts): escrow failed ETH refunds, remove block-derived trait seeds",
+   "kind": "fix",
+   "template": false,
+   "words": 99
+  },
+  {
+   "sha": "bb65f1e15b",
+   "date": "2026-10-07",
+   "subject": "Add crawl contract: robots.txt, llms.txt, sitemap.xml",
+   "kind": "feat",
+   "template": false,
+   "words": 87
+  },
+  {
+   "sha": "8a1b8c35c7",
+   "date": "2026-10-01",
+   "subject": "feat(scam-detector): B20/Cobalt issuer-power detection + hard veto",
+   "kind": "feat",
+   "template": false,
+   "words": 97
+  },
+  {
+   "sha": "1981991220",
+   "date": "2026-09-26",
+   "subject": "fix(security): gitleaks config was disabling every default rule",
+   "kind": "fix",
+   "template": false,
+   "words": 64
+  },
+  {
+   "sha": "05e02b088b",
+   "date": "2026-09-26",
+   "subject": "ci(security): secret scan + SAST gate, from AikidoSec's open tooling",
+   "kind": "ops",
+   "template": false,
+   "words": 81
+  },
+  {
+   "sha": "90f46f876d",
+   "date": "2026-09-26",
+   "subject": "chore(ops): sync runtime state, digests, trench logs and ops scripts",
+   "kind": "chore",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "4680b0dfcd",
+   "date": "2026-09-26",
+   "subject": "chore: stop tracking 132MB runtime sqlite db (mesh_terminal/data/bus.db)",
+   "kind": "chore",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "1f1f54d702",
+   "date": "2026-09-26",
+   "subject": "feat(contracts): add AgentWorkEscrow contract + Foundry tests",
+   "kind": "feat",
+   "template": false,
+   "words": 7
+  },
+  {
+   "sha": "74657b7593",
+   "date": "2026-09-26",
+   "subject": "fix(mesh_terminal): tolerate scalar/xcli error snapshots in mentions adapter",
+   "kind": "fix",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "fa784b5255",
+   "date": "2026-09-21",
+   "subject": "feat(signer): add self-hosted EIP-191 message signer page + footer link",
+   "kind": "feat",
+   "template": false,
+   "words": 35
+  },
+  {
+   "sha": "813c166983",
+   "date": "2026-09-12",
+   "subject": "fix(deps): next 16.3.5 (2 critical RCEs) + sharp 0.35.4, repin fast-uri/ip-address overrides",
+   "kind": "fix",
+   "template": false,
+   "words": 76
+  },
+  {
+   "sha": "9c63393227",
+   "date": "2026-09-12",
+   "subject": "fix(links): repoint retired github.com/BasedNUKEM \u2192 github.com/D0xedDevi0 in README/docs/skills [hotfix]",
+   "kind": "fix",
+   "template": false,
+   "words": 9
+  },
+  {
+   "sha": "fc36e84e69",
+   "date": "2026-09-12",
+   "subject": "fix(links): repoint retired github.com/BasedNUKEM \u2192 github.com/D0xedDevi0",
+   "kind": "fix",
+   "template": false,
+   "words": 40
+  },
+  {
+   "sha": "4a3043b378",
+   "date": "2026-09-09",
+   "subject": "\ud83d\udfe6 guard: approve D0xedDevi0 only (BasedNUKEM retired)",
+   "kind": "other",
+   "template": false,
+   "words": 7
+  },
+  {
+   "sha": "1fe77df9f9",
+   "date": "2026-09-09",
+   "subject": "fix: avoid TLS loop on admin host fallback",
+   "kind": "fix",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "03bf3c94be",
+   "date": "2026-09-08",
+   "subject": "docs: document VPS-native auto-deploy architecture",
+   "kind": "docs",
+   "template": false,
+   "words": 26
+  },
+  {
+   "sha": "99331afa66",
+   "date": "2026-09-08",
+   "subject": "chore: untrack build artifacts + gitignore runtime state",
+   "kind": "chore",
+   "template": false,
+   "words": 40
+  },
+  {
+   "sha": "463ec590fd",
+   "date": "2026-09-08",
+   "subject": "feat: preserve pre-migration contract/server/skill work",
+   "kind": "feat",
+   "template": false,
+   "words": 72
+  },
+  {
+   "sha": "e4953d3285",
+   "date": "2026-09-08",
+   "subject": "fix: point DEVIO profile-sync and registry to live bankr address",
+   "kind": "fix",
+   "template": false,
+   "words": 38
+  },
+  {
+   "sha": "e6e66f17e5",
+   "date": "2026-09-03",
+   "subject": "\ud83d\udfe6 lint: fix 31 eslint errors blocking Frontend CI",
+   "kind": "other",
+   "template": false,
+   "words": 49
+  },
+  {
+   "sha": "16d6b11aa3",
+   "date": "2026-09-03",
+   "subject": "\ud83d\udfe6 ci: align frontend audit to critical + fix Datadog gate",
+   "kind": "other",
+   "template": false,
+   "words": 71
+  },
+  {
+   "sha": "9a67bfaafb",
+   "date": "2026-09-03",
+   "subject": "\ud83d\udfe6 ci: scope npm audit to prod deps + gate Datadog on secrets",
+   "kind": "other",
+   "template": false,
+   "words": 69
+  },
+  {
+   "sha": "7840da18de",
+   "date": "2026-09-03",
+   "subject": "\ud83d\udfe6 fix: trading signals test \u2014 mock DexScreener fetch to exercise static fallback",
+   "kind": "other",
+   "template": false,
+   "words": 59
+  },
+  {
+   "sha": "86c539a5d1",
+   "date": "2026-09-03",
+   "subject": "\ud83d\udfe6 fix: restore trading stats/positions/kill-switch routes dropped in Bankr Elevation refactor",
+   "kind": "other",
+   "template": false,
+   "words": 57
+  },
+  {
+   "sha": "87a1c6ff8a",
+   "date": "2026-09-03",
+   "subject": "\ud83d\udfe6 ci: switch CI/test workflows from self-hosted to ubuntu-latest",
+   "kind": "other",
+   "template": false,
+   "words": 63
+  },
+  {
+   "sha": "1be930a081",
+   "date": "2026-09-01",
+   "subject": "\ud83d\udfe6 paraswarm: live Agent Task Market panel (v2 tasks + x402 receipts + escrowed intents)",
+   "kind": "other",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "e9c4df8f17",
+   "date": "2026-08-31",
+   "subject": "\ud83d\udfe6 mesh-terminal: harden HTTP API layer (Strike 5.1)",
+   "kind": "other",
+   "template": false,
+   "words": 80
+  },
+  {
+   "sha": "01f5e004be",
+   "date": "2026-08-31",
+   "subject": "MESH Strike 5: perceptive-precision aggregator + collaboration hub",
+   "kind": "other",
+   "template": false,
+   "words": 80
+  },
+  {
+   "sha": "67ecef8b24",
+   "date": "2026-08-30",
+   "subject": "MESH: exec-venue routing + Bankr /wallet aggregator + live sandbox arm",
+   "kind": "other",
+   "template": false,
+   "words": 86
+  },
+  {
+   "sha": "31a84c4e2d",
+   "date": "2026-08-29",
+   "subject": "serve.py: handle dict-shaped engine_state (hydration-fix schema) \u2014 /api/session crashed with AttributeError, /api/state returned non-array, page showed OFFLINE",
+   "kind": "other",
+   "template": false,
+   "words": 17
+  },
+  {
+   "sha": "3277eb759e",
+   "date": "2026-08-29",
+   "subject": "Strike 4: velocity-gated verdicts \u2014 buy pressure promotes WATCH->ARMED, heavy sell pressure demotes ARMED->WATCH",
+   "kind": "other",
+   "template": false,
+   "words": 14
+  },
+  {
+   "sha": "5a6c07188f",
+   "date": "2026-08-29",
+   "subject": "Vol-velocity scoring (m5 buy pressure), price cross-check divergence flag, multi-chain ingest hydration fix",
+   "kind": "other",
+   "template": false,
+   "words": 13
+  },
+  {
+   "sha": "22f9e253c3",
+   "date": "2026-08-29",
+   "subject": "Discovery resilience: GeckoTerminal new-pools source \u2014 dual-source discovery lane, dexscreener null-pairs guard",
+   "kind": "other",
+   "template": false,
+   "words": 12
+  },
+  {
+   "sha": "29707e7d68",
+   "date": "2026-08-27",
+   "subject": "Live-exec safety: pre-flight risk gates (liquidity floor + balance check), wallet balance API, fund CLI + /api/sandbox funding status",
+   "kind": "other",
+   "template": false,
+   "words": 19
+  },
+  {
+   "sha": "3373f5dee2",
+   "date": "2026-08-27",
+   "subject": "Resilience: multi-aggregator market data \u2014 GeckoTerminal fallback for resolver + MTM, cross-source pricing",
+   "kind": "other",
+   "template": false,
+   "words": 13
+  },
+  {
+   "sha": "a62b171ae1",
+   "date": "2026-08-27",
+   "subject": "Phase 4+: branded visual proof cards (navy/cyan pixel-grid) attached to fills/closes",
+   "kind": "other",
+   "template": false,
+   "words": 11
+  },
+  {
+   "sha": "3b87d65ba2",
+   "date": "2026-08-27",
+   "subject": "Phase 4: proof loop state + ledger snapshot",
+   "kind": "other",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "ef95735fa1",
+   "date": "2026-08-27",
+   "subject": "Phase 3: live-exec sandbox \u2014 real /wallet/swap behind hard kill-switch, preview mode, /api/sandbox, dashboard EXEC MODE",
+   "kind": "other",
+   "template": false,
+   "words": 16
+  },
+  {
+   "sha": "ae0328e75d",
+   "date": "2026-08-27",
+   "subject": "\ud83d\udfe6 MESH Terminal Phase 2: durable paper ledger + multi-day PnL",
+   "kind": "other",
+   "template": false,
+   "words": 96
+  },
+  {
+   "sha": "57845e188d",
+   "date": "2026-08-26",
+   "subject": "\ud83d\udfe6 fix: fuse() now carries address \u2014 Bankr quotes fire on ARMED fills",
+   "kind": "other",
+   "template": false,
+   "words": 54
+  },
+  {
+   "sha": "6e6e966d20",
+   "date": "2026-08-26",
+   "subject": "\ud83d\udfe6 serve.py: readonly mode (MESH_READONLY=1) + MESH_PORT env for VPS deploy",
+   "kind": "other",
+   "template": false,
+   "words": 28
+  },
+  {
+   "sha": "23e2e2b9e5",
+   "date": "2026-08-26",
+   "subject": "\ud83d\udfe6 MESH Terminal Phase 1: Bankr execution rails (real quotes, paper fills)",
+   "kind": "other",
+   "template": false,
+   "words": 78
+  },
+  {
+   "sha": "70ee9ed791",
+   "date": "2026-08-26",
+   "subject": "\ud83d\udfe6 MESH Terminal resolver: mention tickers \u2192 live Base pairs (multi-source fusion)",
+   "kind": "other",
+   "template": false,
+   "words": 77
+  },
+  {
+   "sha": "ddd0699299",
+   "date": "2026-08-26",
+   "subject": "\ud83d\udfe6 MESH Terminal live cockpit: serve.py API + data-driven dashboard",
+   "kind": "other",
+   "template": false,
+   "words": 62
+  },
+  {
+   "sha": "cc210e0781",
+   "date": "2026-08-26",
+   "subject": "\ud83d\udfe6 MESH Terminal Phase 0: event bus + adapters + signal engine + paper policy",
+   "kind": "other",
+   "template": false,
+   "words": 79
+  },
+  {
+   "sha": "d192c2f16c",
+   "date": "2026-08-23",
+   "subject": "fix(deploy): lowercase GHCR repo name (registry requires lowercase)",
+   "kind": "fix",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "2bef84bcc7",
+   "date": "2026-08-23",
+   "subject": "fix(deploy): point GHCR image repo at D0xedDevi0 (BasedNUKEM account dead)",
+   "kind": "fix",
+   "template": false,
+   "words": 10
+  },
+  {
+   "sha": "750801706f",
+   "date": "2026-08-23",
+   "subject": "docs: control plane map \u2014 services/repos/credentials routing (no secrets)",
+   "kind": "docs",
+   "template": false,
+   "words": 9
+  },
+  {
+   "sha": "9516424a71",
+   "date": "2026-08-23",
+   "subject": "fix: vendor x402-reliability-spec as regular files (was accidental gitlink to danbuildss)",
+   "kind": "fix",
+   "template": false,
+   "words": 11
+  },
+  {
+   "sha": "8616e95c5d",
+   "date": "2026-08-23",
+   "subject": "preserve: full working-tree snapshot \u2014 data, scratch scripts, docs/daoagentics, x402 usage rollups (13MB, no secrets)",
+   "kind": "other",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "7dd727a6ef",
+   "date": "2026-08-23",
+   "subject": "sync: tracked working-tree changes (contracts artifacts, social engine, profile-sync, trench data)",
+   "kind": "data",
+   "template": false,
+   "words": 11
+  },
+  {
+   "sha": "6de41ce50d",
+   "date": "2026-08-22",
+   "subject": "feat(daoagentics): Phase 0.5 ERC-6551 wiring \u2014 fix registry signature, add ERC6551Account impl, verify against canonical registry on Base fork",
+   "kind": "feat",
+   "template": false,
+   "words": 97
+  },
+  {
+   "sha": "eb5b10cfb9",
+   "date": "2026-08-15",
+   "subject": "fix(paraswarm): paginate WorkDelivered events across full history",
+   "kind": "fix",
+   "template": false,
+   "words": 38
+  },
+  {
+   "sha": "701a1061d0",
+   "date": "2026-08-15",
+   "subject": "fix(paraswarm): raw eth_call + RPC fallback for order reads; bound getLogs range",
+   "kind": "fix",
+   "template": false,
+   "words": 44
+  },
+  {
+   "sha": "f4f60e6aa2",
+   "date": "2026-08-15",
+   "subject": "fix(paraswarm): decode orders struct manually via raw eth_call",
+   "kind": "fix",
+   "template": false,
+   "words": 36
+  },
+  {
+   "sha": "05df4e52c8",
+   "date": "2026-08-15",
+   "subject": "fix(paraswarm): remove phantom escrowHeld() call that reverted order loading",
+   "kind": "fix",
+   "template": false,
+   "words": 43
+  },
+  {
+   "sha": "0ff94b6b87",
+   "date": "2026-08-13",
+   "subject": "feat(daoagentics): DAGENT Genesis contract \u2014 ERC-721A + ERC-7496 dynamic traits + soulbound Genesis + on-chain pixel SVG tokenURI + ERC-6551 hook",
+   "kind": "feat",
+   "template": false,
+   "words": 97
+  },
+  {
+   "sha": "35e4fe632b",
+   "date": "2026-08-11",
+   "subject": "\ud83d\udc1d fix: Paraswarm page twitching \u2014 stable client, no-layout-shift error toast, error-aware empty states",
+   "kind": "other",
+   "template": false,
+   "words": 80
+  },
+  {
+   "sha": "ce7adc8675",
+   "date": "2026-08-11",
+   "subject": "\ud83d\udee1\ufe0f fix: guard provenance_breakdown.map() \u2014 prevent ErrorBoundary crash on partial mesh API response",
+   "kind": "other",
+   "template": false,
+   "words": 73
+  },
+  {
+   "sha": "276eafecf3",
+   "date": "2026-08-11",
+   "subject": "\ud83d\udfe6 homepage refresh: FEATURES x2, footer links, top nav + defensive WalletProvider",
+   "kind": "other",
+   "template": false,
+   "words": 93
+  },
+  {
+   "sha": "a5723bed93",
+   "date": "2026-08-11",
+   "subject": "\ud83d\udfe6 fix: regenerate x402 lock file for npm 10 compat (magicast transitive dep)",
+   "kind": "other",
+   "template": false,
+   "words": 13
+  },
+  {
+   "sha": "ed622f9098",
+   "date": "2026-08-10",
+   "subject": "Add file-based fallback for escrow seller key",
+   "kind": "feat",
+   "template": false,
+   "words": 7
+  },
+  {
+   "sha": "2cbfa14d45",
+   "date": "2026-08-10",
+   "subject": "Add x402 escrow scheme support \u2014 D0xedEscrow contract + combined middleware",
+   "kind": "feat",
+   "template": false,
+   "words": 69
+  },
+  {
+   "sha": "e7aaf7a318",
+   "date": "2026-08-10",
+   "subject": "\ud83d\udfe6 fix: receiptCount selector on /api/revenue \u2014 0x85b5ad55 \u2192 0x7f038f3c (public var getter)",
+   "kind": "other",
+   "template": false,
+   "words": 41
+  },
+  {
+   "sha": "ef4a8cbced",
+   "date": "2026-08-10",
+   "subject": "\ud83d\udfe6 Bankr Elevation \u2014 Phases 1-5: DEVIO Utility + x402 Revenue + Bankr Integration + Paraswarm + Flywheel (#753)",
+   "kind": "other",
+   "template": false,
+   "words": 119
+  },
+  {
+   "sha": "03ad1c2f1e",
+   "date": "2026-08-10",
+   "subject": "feat: add Base app verification meta tag (69a22d913733cbf264facb98)",
+   "kind": "feat",
+   "template": false,
+   "words": 8
+  },
+  {
+   "sha": "8d0d50c465",
+   "date": "2026-08-10",
+   "subject": "\ud83d\udfe6 fix: BigInt literal -> BigInt(1) for ES5 target (production build)",
+   "kind": "other",
+   "template": false,
+   "words": 11
+  },
+  {
+   "sha": "09089422fb",
+   "date": "2026-08-09",
+   "subject": "\ud83d\udfe6 Phase 2.3: mesh memory section on developers/marketplace page",
+   "kind": "other",
+   "template": false,
+   "words": 9
+  },
+  {
+   "sha": "d5f2f9e826",
+   "date": "2026-08-09",
+   "subject": "\ud83d\udfe6 Phase 2.1-2.2: wire the mesh into the app \u2014 Ask Devio grounding + homepage provenance",
+   "kind": "other",
+   "template": false,
+   "words": 86
+  },
+  {
+   "sha": "1b91f655aa",
+   "date": "2026-08-09",
+   "subject": "\ud83d\udfe6\ud83d\udfe9 Paraswarm: order creation forms (WalletConnect + wagmi)",
+   "kind": "other",
+   "template": false,
+   "words": 66
+  },
+  {
+   "sha": "ed14020d24",
+   "date": "2026-08-09",
+   "subject": "deploy: trigger Vercel rebuild for /paraswarm",
+   "kind": "ops",
+   "template": false,
+   "words": 6
+  },
+  {
+   "sha": "d803b72da0",
+   "date": "2026-08-09",
+   "subject": "fix: ABI array cleanup + FooterLinkGroup removal",
+   "kind": "fix",
+   "template": false,
+   "words": 7
+  },
+  {
+   "sha": "40d517ef65",
+   "date": "2026-08-09",
+   "subject": "fix: remove missing FooterLinkGroup import",
+   "kind": "fix",
+   "template": false,
+   "words": 5
+  },
+  {
+   "sha": "9055be0793",
+   "date": "2026-08-09",
+   "subject": "\ud83d\udfe6\ud83d\udfe9 Paraswarm: live order-book page + nav link",
+   "kind": "other",
+   "template": false,
+   "words": 48
+  },
+  {
+   "sha": "8f9a0d661e",
+   "date": "2026-08-09",
+   "subject": "\ud83d\udfe6\ud83d\udfe9 add ParaswarmMarket to registry + homepage status",
+   "kind": "other",
+   "template": false,
+   "words": 29
+  },
+  {
+   "sha": "a834df1d8c",
+   "date": "2026-08-08",
+   "subject": "\ud83d\udd35 registry: fee beneficiaries -> 0xf8f96d on both chains (Base tx 0x6b8998, RH tx 0x49936a)",
+   "kind": "other",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "0e0e20c003",
+   "date": "2026-08-07",
+   "subject": "\ud83d\udd35\ud83d\udfe9 DEVIO v3 redeploy: cross-chain Base + Robinhood w/ logos in IPFS",
+   "kind": "other",
+   "template": false,
+   "words": 80
+  },
+  {
+   "sha": "7932f2d798",
+   "date": "2026-08-07",
+   "subject": "fix: document Bankr token-list mystery \u2014 fee-recipient scoping + 4 tribute launches",
+   "kind": "fix",
+   "template": false,
+   "words": 96
+  },
+  {
+   "sha": "4b653fae6d",
+   "date": "2026-08-07",
+   "subject": "feat: Phase 1 \u2014 live revenue dashboard + Bankr product URLs",
+   "kind": "feat",
+   "template": false,
+   "words": 92
+  },
+  {
+   "sha": "2cf09f2717",
+   "date": "2026-08-07",
+   "subject": "feat: DEVIO Bankr agent profile visual makeover",
+   "kind": "feat",
+   "template": false,
+   "words": 45
+  },
+  {
+   "sha": "92877e78ed",
+   "date": "2026-08-07",
+   "subject": "feat: DEVIO token identity layer \u2014 fix stale app + add canonical registry + claim first fees",
+   "kind": "feat",
+   "template": false,
+   "words": 113
+  },
+  {
+   "sha": "742eb13801",
+   "date": "2026-08-06",
+   "subject": "\ud83c\udfa8 Social engine v3: visual media engine + media-vibe auto-reply + trench topic source",
+   "kind": "other",
+   "template": false,
+   "words": 78
+  },
+  {
+   "sha": "ff1a01b9be",
+   "date": "2026-08-06",
+   "subject": "chore: activate social engine env (SOCIAL_ENGINE_APPROVED=true + TWITTER_* creds)",
+   "kind": "chore",
+   "template": false,
+   "words": 9
+  },
+  {
+   "sha": "7e5b4b98a7",
+   "date": "2026-08-05",
+   "subject": "\ud83c\udfa8 Doto wave 3: subpage parity + social status fix + new Doto OG image",
+   "kind": "other",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "81997cbe9f",
+   "date": "2026-08-05",
+   "subject": "fix: social status route detects healthy engine via kill switch + SOCIAL_ENGINE_APPROVED flag for Vercel",
+   "kind": "fix",
+   "template": false,
+   "words": 15
+  },
+  {
+   "sha": "11b35b096b",
+   "date": "2026-08-05",
+   "subject": "\ud83c\udfa8 Doto wave 2: hero SYNCING badge, section eyebrows, nav group labels, footer social links, Ask Devio header \u2014 full dot-matrix rollout",
+   "kind": "other",
+   "template": false,
+   "words": 22
+  },
+  {
+   "sha": "58079fbfd9",
+   "date": "2026-08-05",
+   "subject": "\ud83d\udd27 Fix build: exclude x402/ from TS type check, skip native module compile for better-sqlite3 (not needed for web build)",
+   "kind": "other",
+   "template": false,
+   "words": 20
+  },
+  {
+   "sha": "6a881a366d",
+   "date": "2026-08-05",
+   "subject": "\ud83c\udfa8 Add Doto dot-matrix font \u2014 cinematic section eyebrows, command card labels, agent aura modules, proof timeline indices + card generator tool",
+   "kind": "other",
+   "template": false,
+   "words": 60
+  },
+  {
+   "sha": "957c5820ba",
+   "date": "2026-08-03",
+   "subject": "docs: x402 future framework \u2014 v2.0\u2192v3.0 trustless route discovery roadmap",
+   "kind": "docs",
+   "template": false,
+   "words": 48
+  },
+  {
+   "sha": "1e20422384",
+   "date": "2026-08-03",
+   "subject": "feat(x402): hub receipt manifest \u2014 per per-action receipt spec (Axiom/AxiomBot)",
+   "kind": "feat",
+   "template": false,
+   "words": 73
+  },
+  {
+   "sha": "1daa65eb7c",
+   "date": "2026-08-03",
+   "subject": "feat(bankr): agentAccess on all 5 x402 endpoints + write-mode webhook + deploy v2.1.0",
+   "kind": "feat",
+   "template": false,
+   "words": 52
+  }
+ ]
+}
